@@ -22,9 +22,12 @@ struct ChatModelChoose: View {
                             ChatModelMsg(model: chatVM.models[index])
                         }
                     }
-                }
+                }.padding()
                 Spacer()
-            }.navigationBarTitle("选择聊天模型")
+            }
+            .navigationBarTitle("选择聊天模型")
+            .navigationBarTitleDisplayMode(.inline)
+            
         }
     }
 }

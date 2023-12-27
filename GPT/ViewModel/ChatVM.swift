@@ -15,6 +15,7 @@ class ChatVM: ObservableObject {
     private let modelEmojis: [String] = ["😀","🧐"]
     private let modelMsgs: [String] = ["畅聊专家","博学者"]
     private let modelIDs: [Int] = [1,2]
+    
     var SingleMsgs: [Int : [SingleMsg]] {
         chatModel.SingleMsgs
     }
@@ -28,7 +29,7 @@ class ChatVM: ObservableObject {
             let model: ModelMsg = ModelMsg(id: index, modelEmoji: modelEmojis[index], modelMsg: modelMsgs[index],modelID: modelIDs[index])
             models.append(model)
         }
-        self.chatModel = ChatModel(SingleMsgs:[1:[],2:[]], models: models)
+        self.chatModel = ChatModel(SingleMsgs:[1:[SingleMsg(id: 1, content: "你好", isUser: true)],2:[]], models: models)
     }
     
     func chat(modelID: Int,askContent: String,completion: @escaping (Bool) -> Void){

@@ -17,21 +17,22 @@ struct MainView: View {
         TabView(selection: $selectedTab) {
             // 第一个标签
             NavigationView {
-                VStack{
-                    ChatModelChoose(chatVM: chatVM, userVM: userVM)
-                }
+                ChatModelChoose(chatVM: chatVM, userVM: userVM)
+                Spacer()
             }.tabItem {
                 Image(systemName: "message")
                 Text("聊天")
             }.tag(0)
             
             NavigationView {
-                Profile(userVM: userVM)
-                    .navigationBarTitle(userVM.currentUser?.username ?? "未登录")
+                    Profile(userVM: userVM)
+                        .navigationBarTitle(userVM.currentUser?.username ?? "未登录")
+                        
             }.tabItem {
                 Image(systemName: "person.crop.circle")
                 Text("我")
             }.tag(1)
+
         }
     }
 }

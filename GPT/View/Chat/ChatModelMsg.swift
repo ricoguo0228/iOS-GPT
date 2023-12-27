@@ -13,7 +13,7 @@ struct ChatModelMsg: View {
     var body: some View {
         VStack{
             Text(model.modelEmoji)
-                .font(.system(size: 64))
+                .font(.system(size: 48))
             Text(model.modelMsg)
                 .font(.system(size: 16))
         }

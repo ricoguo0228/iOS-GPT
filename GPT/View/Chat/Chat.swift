@@ -16,7 +16,6 @@ struct Chat: View {
     @State private var isShowAlert = false
     
     var body: some View {
-        
         ZStack{
             VStack{
                 if let singleMsgs = chatVM.SingleMsgs[modelID] {
@@ -24,6 +23,8 @@ struct Chat: View {
                         Message(singleMsg: message)
                     }
                     .listStyle(.grouped)
+                    .transition(.opacity)
+                
                 }else{
                     Text("暂无聊天记录")
                 }
@@ -56,7 +57,9 @@ struct Chat: View {
                 }
             }
         }
-        
+        .navigationBarBackButtonHidden(true)
+        .navigationBarTitle(chatVM.models[modelID-1].modelMsg)
+        .navigationBarItems(leading: MyBackButton())
     }
     
     func afterCommit() {
@@ -78,6 +81,19 @@ struct Chat: View {
         }
     }
     
+    struct MyBackButton: View {
+        @Environment(\.dismiss) var dismiss
+        
+        var body: some View {
+            Button(action: {
+               dismiss()
+            }) {
+                HStack {
+                    Text("< 返回")
+                }
+            }
+        }
+    }
 }
 
 #Preview {
