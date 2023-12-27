@@ -28,7 +28,7 @@ class ChatVM: ObservableObject {
             let model: ModelMsg = ModelMsg(id: index, modelEmoji: modelEmojis[index], modelMsg: modelMsgs[index],modelID: modelIDs[index])
             models.append(model)
         }
-        self.chatModel = ChatModel(SingleMsgs:[1:[SingleMsg(id: 1, content: "你好", isUser: true),SingleMsg(id: 1, content: "你好", isUser: false)],2:[]], models: models)
+        self.chatModel = ChatModel(SingleMsgs:[1:[],2:[]], models: models)
     }
     
     func chat(modelID: Int,askContent: String,completion: @escaping (Bool) -> Void){
@@ -42,7 +42,7 @@ class ChatVM: ObservableObject {
                 let id: Int = responseData["data"]["id"].intValue
                 let askContent: String = responseData["data"]["askContent"].stringValue
                 let replyContent: String = responseData["data"]["replyContent"].stringValue
-                self.divide(id: id, askContent: askContent, replyContent: replyContent,modelID: modelID)
+                self.divideAndAddToSingleMsg(id: id, askContent: askContent, replyContent: replyContent,modelID: modelID)
             } else {
                 //修改线程UI，显示失败
                 completion(false)
@@ -50,14 +50,10 @@ class ChatVM: ObservableObject {
         }
     }
     
-    func divide(id: Int, askContent: String, replyContent: String,modelID: Int){
+    func divideAndAddToSingleMsg(id: Int, askContent: String, replyContent: String,modelID: Int){
         let singleMsgAsk: SingleMsg = SingleMsg(id: id, content: askContent, isUser: true)
         let singleMsgRep: SingleMsg = SingleMsg(id: id + 1, content: replyContent, isUser: false)
-        self.addSingleMsg(singleMsg: singleMsgAsk,modelID: modelID)
-        self.addSingleMsg(singleMsg: singleMsgRep,modelID: modelID)
-    }
-    
-    func addSingleMsg(singleMsg:SingleMsg,modelID: Int){
-        chatModel.addSingleMsg(singleMsg: singleMsg,modelID: modelID)
+        chatModel.addSingleMsg(singleMsg: singleMsgAsk,modelID: modelID)
+        chatModel.addSingleMsg(singleMsg: singleMsgRep,modelID: modelID)
     }
 }
